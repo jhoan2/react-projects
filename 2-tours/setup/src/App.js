@@ -34,10 +34,22 @@ function App() {
       <Loading />
     </main>
   }
+  if(tours.length === 0) {
+    return (
+    <main>
+      <div className='title'>
+        <h3>No tours left</h3>
+        <button onClick={() => fetchTours()}>Get tours back</button>
+      </div>
+    </main>
+    )
+  } else {
+
   return <main>
     {/* This is how you pass a function as a props dwon to the children. */}
     <Tours tours={tours} removeTour={removeTour} />
   </main>
+  }
 }
 
 export default App
