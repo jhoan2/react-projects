@@ -1,11 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { FiChevronRight, FiChevronLeft } from 'react-icons/fi';
-import { FaQuoteLeft, FaQuoteRight } from 'react-icons/fa';
+import { FaQuoteRight } from 'react-icons/fa';
 import data from './data';
+
 function App() {
   const [ people, setPeople ] = useState(data);
-  //index for scrolling through it 
+  //general idea is to give each review an index and then put them to right and scroll through them with class making one visible 
+  //and moving the just seen to the left and the whole stack to right. 
   const [ index, setIndex ] = useState(0);
+  useEffect(() => {
+    const lastIndex = people.length - 1;
+    if ( index < lastIndex) {
+      setIndex(0)
+    }
+    if ( index > 0) {
+      setIndex()
+    }
+  }, [index, people])
+
   return <section className='section'>
     <div className='title'>
       <h2>
@@ -15,7 +27,14 @@ function App() {
     <div className='section-center'>
       {people.map((person, personIndex) => {
         const { id, image, name, title, quote} = person;
-        return <article key={id}>
+        let position = 'nextSlide';
+        if(personIndex === index) {
+          position = 'activeSlide'
+        } 
+        if (personIndex === index - 1 || (index === 0 && personIndex === people.length - 1)) {
+          position = 'lastSlide'
+        }
+        return <article key={id} className={position} >
           <img src={image} alt={title} className='person-img' />
           <h4>{name}</h4>
           <p className='title'>{title}</p>
@@ -23,14 +42,14 @@ function App() {
           <FaQuoteRight className='icon' />
         </article>
       })}
-      <button className='prev'>
-        <FaQuoteLeft />
+      <button className='prev' onClick={() => setIndex(index - 1)}>
+        <FiChevronLeft />
       </button>
-      <button className='next'>
-        <FaQuoteRight />
+      <button className='next' onClick={() => setIndex(index + 1)}>
+        <FiChevronRight />
       </button>
     </div>
-    slider project setup</section>;
+    </section>;
 }
 
 export default App;
