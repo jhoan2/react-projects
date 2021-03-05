@@ -32,8 +32,8 @@ function App() {
       <h2>Experience</h2>
       <div className='underline'></div>
     </div>
-    <div className='job-center'>
-      <div className='btn-containter'>
+    <div className='jobs-center'>
+      <div className='btn-container'>
         {jobs.map((item, index) => {
           return <button key={item.id} onClick={() => setValue(index)} className={`job-btn ${index === value && 'active-btn'}`}>
             {item.company}
