@@ -8,7 +8,7 @@ function App() {
   //For times when the color is wrong 
   const [error, setError] = useState(false);
   //For the default value in the submit 
-  const [list, setList] = useState([]);
+  const [list, setList] = useState(new Values('#4169E1').all(10));
 
   const handleSubmit = (e) => {
     e.preventDefault();
