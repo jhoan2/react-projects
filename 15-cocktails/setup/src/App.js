@@ -8,7 +8,27 @@ import Error from "./pages/Error";
 // import components
 import Navbar from "./components/Navbar";
 function App() {
-  return <div></div>;
+  return (
+    <div>
+      <Router>
+        <Navbar />
+        <Switch>
+          <Route exact path="/">
+            <Home />
+          </Route>
+          <Route path="/about">
+            <About />
+          </Route>
+          <Route path="/cocktail/:id">
+            <SingleCocktail />
+          </Route>
+          <Route path="*">
+            <Error />
+          </Route>
+        </Switch>
+      </Router>
+    </div>
+  );
 }
 
 export default App;
