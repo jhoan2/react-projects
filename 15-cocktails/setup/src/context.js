@@ -7,19 +7,20 @@ const AppContext = React.createContext();
 const AppProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("a");
-  const [cocktails, setCockTails] = useState([]);
+  const [cocktails, setCocktails] = useState([]);
 
-  //useCallback is for if only if something changes about this function then create it from scratch
   const fetchDrinks = useCallback(async () => {
     setLoading(true);
     try {
       const response = await fetch(`${url}${searchTerm}`);
       const data = await response.json();
+      console.log(data);
       const { drinks } = data;
       if (drinks) {
         const newCocktails = drinks.map((item) => {
           const { idDrink, strDrink, strDrinkThumb, strAlcoholic, strGlass } =
             item;
+
           return {
             id: idDrink,
             name: strDrink,
@@ -28,9 +29,9 @@ const AppProvider = ({ children }) => {
             glass: strGlass,
           };
         });
-        setCockTails(newCocktails);
+        setCocktails(newCocktails);
       } else {
-        setCockTails([]);
+        setCocktails([]);
       }
       setLoading(false);
     } catch (error) {
@@ -38,14 +39,12 @@ const AppProvider = ({ children }) => {
       setLoading(false);
     }
   }, [searchTerm]);
-
   useEffect(() => {
     fetchDrinks();
   }, [searchTerm, fetchDrinks]);
-
   return (
     <AppContext.Provider
-      value={(loading, searchTerm, cocktails, setSearchTerm)}
+      value={{ loading, cocktails, searchTerm, setSearchTerm }}
     >
       {children}
     </AppContext.Provider>
